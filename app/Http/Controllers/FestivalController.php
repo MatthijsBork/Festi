@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Festival;
 use Illuminate\Http\Request;
 
@@ -27,8 +28,9 @@ class FestivalController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->session()->previousUrl() == route('dashboard.*')) {
-            return view('dashboard.festivals.create');
+        if ($request->routeIs('dashboard.festivals.create')) {
+            $organizers = User::organizers();
+            return view('dashboard.festivals.create', compact('organizers'));
         }
 
         return view('user.festivals.create');

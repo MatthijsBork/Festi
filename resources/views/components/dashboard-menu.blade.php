@@ -2,10 +2,10 @@
     <h2 class="mb-4 text-lg font-semibold">Dashboard menu</h2>
     <ul>
         <li class="mb-2">
-            <x-button-link href="{{ route('dashboard.houses') }}" :active="request()->routeIs('dashboard.houses*')">Woningen</x-button-link>
+            <x-button-link href="{{ route('dashboard.festivals') }}" :active="request()->routeIs('dashboard.festivals*')">Festivals</x-button-link>
         </li>
         <li class="mb-2">
-            <x-button-link href="{{ route('dashboard.responses') }}" :active="request()->routeIs('dashboard.responses*')">Woning reacties</x-button-link>
+            <x-button-link href="{{ route('dashboard.roles') }}" :active="request()->routeIs('dashboard.roles*')">Rollen</x-button-link>
         </li>
         <li class="mb-2">
             <x-button-link href="{{ route('dashboard.users') }}" :active="request()->routeIs('dashboard.users*')">Gebruikers</x-button-link>

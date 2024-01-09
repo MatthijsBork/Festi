@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
@@ -20,7 +21,8 @@ class UserController extends Controller
 {
     public function create()
     {
-        return view('dashboard.users.create');
+        $roles = Role::orderBy('name')->get();
+        return view('dashboard.users.create', compact('roles'));
     }
 
     public function edit(User $user)
@@ -43,6 +45,7 @@ class UserController extends Controller
             'address' => $request->address,
             'postal_code' => $request->postal,
             'city' => Str::ucfirst($request->city),
+            'role' => $request->role_id ?? null,
             'password' => Hash::make($request->password),
             'is_admin' => $admin,
         ]);

@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\HouseController;
-use App\Http\Controllers\HouseImageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FestivalController;
 use App\Http\Controllers\ResponseController;
-use App\Http\Controllers\UserHouseController;
+use App\Http\Controllers\UserFestivalController;
 use App\Http\Controllers\UserResponseController;
+use App\Http\Controllers\FestivalImageController;
 use App\Http\Controllers\UserHouseImageController;
 
 /*
@@ -21,15 +22,15 @@ use App\Http\Controllers\UserHouseImageController;
 |
 */
 
-Route::get('/', [HouseController::class, 'index'])->name('index');
+Route::get('/', [FestivalController::class, 'index'])->name('index');
 
-// HOUSES
-Route::prefix('houses')->name('houses')->group(function () {
-    Route::get('', [HouseController::class, 'index'])->name('.index');
-    Route::prefix('{house}')->group(function () {
-        Route::get('show', [HouseController::class, 'show'])->name('.show');
-        Route::get('respond', [HouseController::class, 'respond'])->name('.respond');
-        Route::post('respond', [HouseController::class, 'postResponse'])->name('.respond.store');
+// FESTIVALS
+Route::prefix('festivals')->name('festivals')->group(function () {
+    Route::get('', [FestivalController::class, 'index'])->name('.index');
+    Route::prefix('{festival}')->group(function () {
+        Route::get('show', [FestivalController::class, 'show'])->name('.show');
+        Route::get('respond', [FestivalController::class, 'respond'])->name('.respond');
+        Route::post('respond', [FestivalController::class, 'postResponse'])->name('.respond.store');
     });
 });
 
@@ -44,56 +45,56 @@ Route::middleware('auth')->group(function () {
     Route::prefix('user')->name('user')->group(function () {
 
         // USER/HOUSES
-        Route::prefix('houses')->name('.houses')->group(function () {
-            Route::get('', [UserHouseController::class, 'index']);
-            Route::get('create', [UserHouseController::class, 'create'])->name('.create');
-            Route::post('store', [UserHouseController::class, 'store'])->name('.store');
+        Route::prefix('festivals')->name('.festivals')->group(function () {
+            Route::get('', [FestivalController::class, 'index']);
+            Route::get('create', [FestivalController::class, 'create'])->name('.create');
+            Route::post('store', [FestivalController::class, 'store'])->name('.store');
 
             // HOUSE
             Route::prefix('{house}')->group(function () {
-                Route::get('edit', [UserHouseController::class, 'edit'])->name('.edit');
-                Route::post('update', [UserHouseController::class, 'update'])->name('.update');
-                Route::get('info', [UserHouseController::class, 'info'])->name('.info');
-                Route::get('delete', [UserHouseController::class, 'delete'])->name('.delete');
+                Route::get('edit', [FestivalController::class, 'edit'])->name('.edit');
+                Route::post('update', [FestivalController::class, 'update'])->name('.update');
+                Route::get('info', [FestivalController::class, 'info'])->name('.info');
+                Route::get('delete', [FestivalController::class, 'delete'])->name('.delete');
 
                 // HOUSE IMAGES
                 Route::prefix('images')->name('.images')->group(function () {
-                    Route::get('', [UserHouseImageController::class, 'show']); // Aiden: Ik zou er nog een name achter zetten, zodat je er makkelijker naar kan verwijzen
-                    Route::get('edit', [UserHouseImageController::class, 'edit'])->name('.edit');
-                    Route::post('store', [UserHouseImageController::class, 'store'])->name('.store');
-                    Route::get('{image}/delete', [UserHouseImageController::class, 'delete'])->name('.delete');
+                    Route::get('', [FestivalImageController::class, 'show']);
+                    Route::get('edit', [FestivalImageController::class, 'edit'])->name('.edit');
+                    Route::post('store', [FestivalImageController::class, 'store'])->name('.store');
+                    Route::get('{image}/delete', [FestivalImageController::class, 'delete'])->name('.delete');
                 });
 
                 // RESPONSES
-                Route::prefix('responses')->name('.responses')->group(function () {
-                    Route::get('', [UserResponseController::class, 'houseIndex']);
-                    Route::get('edit', [UserResponseController::class, 'edit'])->name('.edit');
-                    Route::post('store', [UserResponseController::class, 'store'])->name('.store');
-                    Route::get('{house_response}/delete', [UserResponseController::class, 'delete'])->name('.delete');
+                // Route::prefix('responses')->name('.responses')->group(function () {
+                //     Route::get('', [UserResponseController::class, 'houseIndex']);
+                //     Route::get('edit', [UserResponseController::class, 'edit'])->name('.edit');
+                //     Route::post('store', [UserResponseController::class, 'store'])->name('.store');
+                //     Route::get('{house_response}/delete', [UserResponseController::class, 'delete'])->name('.delete');
 
-                    // RESPONSE
-                    Route::prefix('{house_response}')->group(function () {
-                        Route::get('show', [UserResponseController::class, 'responseShow'])->name('.show');
-                        Route::get('accept', [UserResponseController::class, 'accept'])->name('.accept');
-                        Route::get('decline', [UserResponseController::class, 'decline'])->name('.decline');
-                    });
-                });
+                //     // RESPONSE
+                //     Route::prefix('{house_response}')->group(function () {
+                //         Route::get('show', [UserResponseController::class, 'responseShow'])->name('.show');
+                //         Route::get('accept', [UserResponseController::class, 'accept'])->name('.accept');
+                //         Route::get('decline', [UserResponseController::class, 'decline'])->name('.decline');
+                //     });
+                // });
             });
         });
 
         // USER/RESPONSES
-        Route::prefix('responses')->name('.responses')->group(function () {
-            Route::get('', [UserResponseController::class, 'index']);
-            Route::get('create', [UserResponseController::class, 'create'])->name('.create');
-            Route::post('store', [UserResponseController::class, 'store'])->name('.store');
+        // Route::prefix('responses')->name('.responses')->group(function () {
+        //     Route::get('', [UserResponseController::class, 'index']);
+        //     Route::get('create', [UserResponseController::class, 'create'])->name('.create');
+        //     Route::post('store', [UserResponseController::class, 'store'])->name('.store');
 
-            // RESPONSE
-            Route::prefix('{house_response}')->group(function () {
-                Route::get('show', [UserResponseController::class, 'show'])->name('.show');
-                Route::get('edit', [UserResponseController::class, 'edit'])->name('.edit');
-                Route::get('delete', [UserResponseController::class, 'delete'])->name('.delete');
-            });
-        });
+        //     // RESPONSE
+        //     Route::prefix('{house_response}')->group(function () {
+        //         Route::get('show', [UserResponseController::class, 'show'])->name('.show');
+        //         Route::get('edit', [UserResponseController::class, 'edit'])->name('.edit');
+        //         Route::get('delete', [UserResponseController::class, 'delete'])->name('.delete');
+        //     });
+        // });
     });
 
     // ADMIN
@@ -102,37 +103,48 @@ Route::middleware('auth')->group(function () {
             return view('dashboard');
         });
 
-        // HOUSES
-        Route::prefix('houses')->name('.houses')->group(function () {
-            Route::get('', [HouseController::class, 'dashboard']);
-            Route::get('create', [HouseController::class, 'create'])->name('.create');
-            Route::post('store', [HouseController::class, 'store'])->name('.store');
-            Route::prefix('{house}')->group(function () {
-                Route::get('edit', [HouseController::class, 'edit'])->name('.edit');
-                Route::post('update', [HouseController::class, 'update'])->name('.update');
-                Route::get('info', [HouseController::class, 'info'])->name('.info');
-                Route::get('delete', [HouseController::class, 'delete'])->name('.delete');
+        // FESTIVALS
+        Route::prefix('festivals')->name('.festivals')->group(function () {
+            Route::get('', [FestivalController::class, 'dashboard']);
+            Route::get('create', [FestivalController::class, 'create'])->name('.create');
+            Route::post('store', [FestivalController::class, 'store'])->name('.store');
+            Route::prefix('{festival}')->group(function () {
+                Route::get('edit', [FestivalController::class, 'edit'])->name('.edit');
+                Route::post('update', [FestivalController::class, 'update'])->name('.update');
+                Route::get('info', [FestivalController::class, 'info'])->name('.info');
+                Route::get('delete', [FestivalController::class, 'delete'])->name('.delete');
 
                 Route::prefix('images')->name('.images')->group(function () {
-                    Route::get('', [HouseImageController::class, 'show']);
-                    Route::get('edit', [HouseImageController::class, 'edit'])->name('.edit');
-                    Route::post('store', [HouseImageController::class, 'store'])->name('.store');
-                    Route::get('{image}/delete', [HouseImageController::class, 'delete'])->name('.delete');
+                    Route::get('', [FestivalImageController::class, 'show']);
+                    Route::get('edit', [FestivalImageController::class, 'edit'])->name('.edit');
+                    Route::post('store', [FestivalImageController::class, 'store'])->name('.store');
+                    Route::get('{image}/delete', [FestivalImageController::class, 'delete'])->name('.delete');
                 });
             });
         });
 
-        // RESPONSES
-        Route::prefix('responses')->name('.responses')->group(function () {
-            Route::get('', [ResponseController::class, 'index']);
-            Route::get('create', [ResponseController::class, 'create'])->name('.create');
-            Route::post('store', [ResponseController::class, 'store'])->name('.store');
-            Route::prefix('{house_response}')->group(function () {
-                Route::get('edit', [ResponseController::class, 'edit'])->name('.edit');
-                Route::post('update', [ResponseController::class, 'update'])->name('.update');
-                Route::get('delete', [ResponseController::class, 'delete'])->name('.delete');
+        Route::prefix('roles')->name('.roles')->group(function () {
+            Route::get('', [RoleController::class, 'dashboard']);
+            Route::get('create', [RoleController::class, 'create'])->name('.create');
+            Route::post('store', [RoleController::class, 'store'])->name('.store');
+            Route::prefix('{role}')->group(function () {
+                Route::get('edit', [RoleController::class, 'edit'])->name('.edit');
+                Route::post('update', [RoleController::class, 'update'])->name('.update');
+                Route::get('info', [RoleController::class, 'info'])->name('.info');
+                Route::get('delete', [RoleController::class, 'delete'])->name('.delete');
             });
         });
+        // RESPONSES
+        // Route::prefix('responses')->name('.responses')->group(function () {
+        //     Route::get('', [ResponseController::class, 'index']);
+        //     Route::get('create', [ResponseController::class, 'create'])->name('.create');
+        //     Route::post('store', [ResponseController::class, 'store'])->name('.store');
+        //     Route::prefix('{house_response}')->group(function () {
+        //         Route::get('edit', [ResponseController::class, 'edit'])->name('.edit');
+        //         Route::post('update', [ResponseController::class, 'update'])->name('.update');
+        //         Route::get('delete', [ResponseController::class, 'delete'])->name('.delete');
+        //     });
+        // });
 
         // USERS
         Route::prefix('users')->name('.users')->group(function () {

@@ -6,14 +6,14 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('index') }}">
-                        <h1 class="font-bold text-2xl">Conducto<b class="text-4xl">.</b></h1>
+                        <h1 class="font-bold text-2xl">Festi<b class="text-4xl">.</b></h1>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('houses.index')" :active="request()->routeIs('/', 'houses*')">
-                        Aanbod
+                    <x-nav-link :href="route('festivals.index')" :active="request()->routeIs('/', 'festivals*')">
+                        Festivals
                     </x-nav-link>
                     @if ((Auth::user()->is_admin ?? 0) == 1)
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard*')">
@@ -44,12 +44,12 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('user.houses')">
-                                Mijn woningen
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('user.responses')">
+                            {{-- <x-dropdown-link :href="route('user.festivals')">
+                                Mijn festivals
+                            </x-dropdown-link> --}}
+                            {{-- <x-dropdown-link :href="route('user.responses')">
                                 Mijn reacties
-                            </x-dropdown-link>
+                            </x-dropdown-link> --}}
 
                             <!-- Authentication -->
                             <x-dropdown-link href="#"
@@ -89,12 +89,12 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <x-responsive-nav-link :href="route('user.houses')" :active="request()->routeIs('user.houses.*')">
+        {{-- <x-responsive-nav-link :href="route('user.festivals')" :active="request()->routeIs('user.festivals.*')">
             Mijn woningen
         </x-responsive-nav-link>
         <x-responsive-nav-link :href="route('user.responses')" :active="request()->routeIs('user.responses.*')">
             Mijn reacties
-        </x-responsive-nav-link>
+        </x-responsive-nav-link> --}}
         @if ((Auth::user()->is_admin ?? 0) == 1)
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard.*')">
@@ -111,12 +111,12 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('user.houses')">
+                {{-- <x-responsive-nav-link :href="route('user.festivals')">
                     Mijn woningen
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('user.responses')">
                     Mijn reacties
-                </x-responsive-nav-link>
+                </x-responsive-nav-link> --}}
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">

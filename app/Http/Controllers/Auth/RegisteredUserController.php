@@ -44,6 +44,7 @@ class RegisteredUserController extends Controller
         $user->address = $request->address;
         $user->postal_code = $request->postal;
         $user->city = $request->city;
+        $user->role_id = $request->role ?? null;
         $user->is_admin = $admin;
         $user->password = Hash::make($request->password);
         $user->save();

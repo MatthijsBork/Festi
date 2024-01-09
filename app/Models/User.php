@@ -49,14 +49,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function houses()
+    public function role()
     {
-        return $this->hasMany(House::class);
+        return $this->belongsTo(Role::class);
     }
 
-    public function responses()
+    public static function organizers()
     {
-        return $this->hasMany(HouseResponse::class);
+        return self::whereHas('role', function ($query) {
+            $query->where('name', 'organizer');
+        })->get();
     }
-
 }

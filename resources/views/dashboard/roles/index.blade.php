@@ -1,54 +1,41 @@
 <x-dashboard-layout>
     <x-slot name="titleSlot">
-        Woningen
+        Rollen
     </x-slot>
 
     <x-slot name="buttonSlot">
-        <x-primary-link href="{{ route('dashboard.houses.create') }}">Woning toevoegen</x-primary-link>
+        <x-primary-link href="{{ route('dashboard.roles.create') }}">Rol toevoegen</x-primary-link>
     </x-slot>
 
     <x-slot name="searchSlot">
         <x-search :action="null"></x-search>
     </x-slot>
 
-    @if (!isset($houses[0]))
+    @if (!isset($roles[0]))
         <div class="w-full p-10 text-center bg-white rounded-lg">
             <h1 class="text-xl font-bold text-blue-500">Veel leegte...</h1>
-            <p class="mb-4">Er zijn geen woningen gevonden</p>
+            <p class="mb-4">Er zijn geen rollen gevonden</p>
         </div>
     @else
         <table class="w-full text-left bg-white table-auto sm:rounded-lg">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-4 py-3">Adres</th>
-                    <th class="px-4 py-3">Stad</th>
-                    <th class="px-4 py-3">Huurprijs</th>
-                    <th class="px-4 py-3">Kamers</th>
+                    <th class="px-4 py-3">Naam</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($houses as $house)
+                @foreach ($roles as $festival)
                     <tr class="border-b even:bg-gray-50">
                         <td class="px-4 py-3">
-                            <a class="hover:underline"
-                                href="{{ route('dashboard.houses.info', compact('house')) }}">{{ $house->address }}</a>
-                        </td>
-                        <td class="px-4 py-3">
-                            <p>{{ $house->city }}</p>
-                        </td>
-                        <td class="px-4 py-3">
-                            <p>€{{ $house->rent }}</p>
-                        </td>
-                        <td class="px-4 py-3">
-                            <p>{{ $house->rooms }}</p>
+                            <a class="hover:underline">{{ $role->name }}</a>
                         </td>
                         <td class="flex justify-end py-3 text-right">
-                            <a title="Bewerken" href="{{ route('dashboard.houses.info', compact('house')) }}"
+                            <a title="Bewerken" href="{{ route('dashboard.roles.edit', compact('role')) }}"
                                 class="text-blue-700 hover:underline">
                                 <x-edit-icon></x-edit-icon>
                             </a>
-                            <a title="Verwijderen" href="{{ route('dashboard.houses.delete', compact('house')) }}"
+                            <a title="Verwijderen" href="{{ route('dashboard.roles.delete', compact('role')) }}"
                                 class="text-red-500 hover:underline"
                                 onclick="return confirm('Weet u zeker dat u dit wilt verwijderen?');">
                                 <x-trash-icon></x-trash-icon>
@@ -59,7 +46,7 @@
             </tbody>
         </table>
         <div class="my-4">
-            {{ $houses->links() }}
+            {{ $roles->links() }}
         </div>
     @endif
 </x-dashboard-layout>

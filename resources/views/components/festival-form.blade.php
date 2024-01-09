@@ -4,50 +4,42 @@
     <div class="tab-content">
         {{ $slot ?? null }}
         <div class="mb-4">
-            <x-input-label for="address">Adres</x-input-label>
-            <input type="text" id="address" name="address" value="{{ $house->address ?? old('address') }}"
+            <x-input-label for="name">Festivalnaam</x-input-label>
+            <input type="text" id="name" name="name" value="{{ $festival->name ?? old('name') }}"
                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-            @error('address')
+            @error('name')
                 <div class="text-red-500">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-4">
-            <x-input-label for="postal_code">Postcode</x-input-label>
-            <input type="text" id="postal_code" name="postal_code"
-                value="{{ $house->postal_code ?? old('postal_code') }}"
+            <x-input-label for="email">Klanten E-mail</x-input-label>
+            <input type="text" id="email" name="email" value="{{ $festival->name ?? old('email') }}"
                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-            @error('postal_code')
+            @error('email')
                 <div class="text-red-500">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-4">
-            <x-input-label for="city">Stad</x-input-label>
-            <input type="text" id="city" name="city" value="{{ $house->city ?? old('city') }}"
+            <x-input-label for="location">Locatie</x-input-label>
+            <input type="text" id="location" name="location"
+                value="{{ $festival->location ?? old('location') }}"
                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-            @error('city')
+            @error('location')
                 <div class="text-red-500">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-4">
-            <x-input-label for="rooms">Aantal kamers</x-input-label>
-            <input type="text" id="city" name="rooms" value="{{ $house->rooms ?? old('rooms') }}"
+            <x-input-label for="date">Datum</x-input-label>
+            <input type="date" id="date" name="date" value="{{ $festival->city ?? old('city') }}"
                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-            @error('rooms')
-                <div class="text-red-500">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-4">
-            <x-input-label for="rent">Huurprijs</x-input-label>
-            <input type="text" id="rent" name="rent" value="{{ $house->rent ?? old('rent') }}"
-                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-            @error('rent')
+            @error('date')
                 <div class="text-red-500">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-4">
             <x-input-label for="description">Beschrijving</x-input-label>
             <textarea id="description" name="description" style="height: 250px;"
-                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">{{ $house->description ?? old('description') }}</textarea>
+                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">{{ $festival->description ?? old('description') }}</textarea>
             @error('description')
                 <div class="text-red-500">{{ $message }}</div>
             @enderror

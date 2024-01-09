@@ -19,6 +19,20 @@
             @enderror
         </div>
         <div class="mb-4">
+            <x-input-label for="role">Rol</x-input-label>
+            <select id="role" name="role"
+                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+                <option selected disabled>Kies een rol</option>
+                <option>Gebruiker</option>
+                @foreach ($roles as $role)
+                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                @endforeach
+            </select>
+            @error('location')
+                <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
             <x-input-label for="telephone">Telefoonnummer</x-input-label>
             <input type="text" id="telephone" name="telephone" value="{{ $user->telephone ?? old('telephone') }}"
                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
@@ -53,7 +67,7 @@
         <div class="mb-4">
             <x-input-label for="admin">Admin</x-input-label>
             <input type="checkbox" id="admin" name="admin" value="1"
-                class="rounded-lg"{{ $user->is_admin ?? null == 1 ?? old('admin') ? 'checked' : '' }}>
+                class="rounded-lg"{{ $user->is_admin ?? (null == 1 ?? old('admin')) ? 'checked' : '' }}>
             @error('admin')
                 <div class="text-red-500">{{ $message }}</div>
             @enderror
