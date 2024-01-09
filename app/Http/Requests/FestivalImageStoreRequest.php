@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HouseImageStoreRequest extends FormRequest
+class FestivalImageStoreRequest extends FormRequest
 {
     public function rules(): array
     {
