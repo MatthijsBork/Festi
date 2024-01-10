@@ -27,7 +27,8 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('dashboard.users.edit', compact('user'));
+        $roles = Role::orderBy('name')->get();
+        return view('dashboard.users.edit', compact('user', 'roles'));
     }
 
     public function store(UserStoreRequest $request): RedirectResponse
@@ -59,6 +60,7 @@ class UserController extends Controller
     {
         $user->name = Str::ucfirst($request->name);
         $user->email = $request->email;
+        $user->role_id = $request->role;
         $user->telephone = $request->telephone;
         $user->address = $request->address;
         $user->postal_code = $request->postal;

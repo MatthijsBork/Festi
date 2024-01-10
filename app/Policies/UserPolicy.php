@@ -3,9 +3,8 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Festival;
 
-class FestivalPolicy
+class UserPolicy
 {
     /**
      * Create a new policy instance.
@@ -13,11 +12,6 @@ class FestivalPolicy
     public function __construct()
     {
         //
-    }
-
-    public function hasFestival(User $user, Festival $festival)
-    {
-        return $festival->user->id == $user->id || $user->is_admin == 1;
     }
 
     public function isOrganizer(User $user)

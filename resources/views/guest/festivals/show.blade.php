@@ -26,23 +26,14 @@
                     <div class="w-full flex flex-col gap-5 px-4 justify-between">
                         <div>
                             <h2 class="text-3xl font-semibold">
-                                {{ $festival->address }}
+                                {{ $festival->name }}
                                 <br>
-                                {{ $festival->postal_code . ', ' . $festival->city }}
+                                {{ $festival->location }}
                             </h2>
                             <hr class="my-3">
-                            <h2 class="text-xl font-semibold">€{{ $festival->rent }} / maand</h2>
+                            <h2 class="text-xl font-semibold"><x-primary-link>Ik ben er ook bij!</x-primary-link></h2>
                             <hr class="my-3">
                             <p>{{ $festival->rooms }} kamers</p>
-                            <hr class="my-3">
-                            <p>
-                                @if ($festival->acceptedResponse() != null)
-                                    <p class="text-red-500">Woning is momenteel bezet tot
-                                        {{ $festival->acceptedResponse()->end_date }}</p>
-                                @else
-                                    <p class="text-green-500">Woning is beschikbaar</p>
-                                @endif
-                            </p>
                             <hr class="my-3">
                             <p class="pt-5 text-xl">
                                 <x-input-label>Beschrijving</x-input-label>

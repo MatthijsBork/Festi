@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class FestivalImage extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 }

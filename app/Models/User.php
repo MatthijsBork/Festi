@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Role;
 use App\Models\House;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -56,8 +56,8 @@ class User extends Authenticatable
 
     public static function organizers()
     {
-        return self::whereHas('role', function ($query) {
-            $query->where('name', 'organizer');
-        })->get();
+        $role = Role::where('name', 'organisator')->first();
+        $users = $role ? $role->users : collect();
+        return $users;
     }
 }

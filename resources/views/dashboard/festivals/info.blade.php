@@ -2,40 +2,41 @@
     @csrf
 
     <x-slot name="titleSlot">
-        <p>{{ $house->address . ', ' . $house->city }}</p>
+        <p>{{ $festival->name }}</p>
     </x-slot>
 
     <x-slot name="buttonSlot">
-        <x-primary-link href="{{ route('dashboard.houses.edit', compact('house')) }}">Informatie bewerken</x-primary-link>
+        <x-primary-link href="{{ route('dashboard.festivals.edit', compact('festival')) }}">Informatie
+            bewerken</x-primary-link>
     </x-slot>
 
-    <x-house-tab-menu :house="$house"></x-house-tab-menu>
+    <x-festival-tab-menu :festival="$festival"></x-festival-tab-menu>
     <div class="p-6 text-gray-900">
         <div class="flex md:flex-row w-full flex-col-reverse justify-between">
             <div class="flex flex-col w-full">
                 <div class="flex flex-row justify-between">
                     <p>
-                        <x-input-label>Postcode</x-input-label>
-                        {{ $house->postal_code }}
+                        <x-input-label>Naam</x-input-label>
+                        {{ $festival->name }}
                     </p>
                     <p>
-                        <x-input-label>Adres</x-input-label>
-                        {{ $house->address . ', ' . $house->city }}
+                        <x-input-label>E-mail</x-input-label>
+                        {{ $festival->email }}
                     </p>
                     <p>
-                        <x-input-label>Huur</x-input-label>
-                        {{ $house->rent }}
+                        <x-input-label>Locatie</x-input-label>
+                        {{ $festival->location }}
                     </p>
                     <p>
-                        <x-input-label>Kamers</x-input-label>
-                        {{ $house->rooms }}
+                        <x-input-label>Datum</x-input-label>
+                        {{ $festival->date }}
                     </p>
                 </div>
                 <hr class="my-3">
                 <div class="flex flex-row gap-5">
                     <div class="flex flex-col">
                         <b>Beschrijving:</b>
-                        <p>{{ $house->description }}</p>
+                        <p>{{ $festival->description }}</p>
                     </div>
                 </div>
             </div>

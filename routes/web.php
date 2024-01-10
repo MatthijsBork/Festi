@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
             Route::post('store', [FestivalController::class, 'store'])->name('.store');
 
             // HOUSE
-            Route::prefix('{house}')->group(function () {
+            Route::prefix('{festival}')->group(function () {
                 Route::get('edit', [FestivalController::class, 'edit'])->name('.edit');
                 Route::post('update', [FestivalController::class, 'update'])->name('.update');
                 Route::get('info', [FestivalController::class, 'info'])->name('.info');
@@ -67,13 +67,13 @@ Route::middleware('auth')->group(function () {
 
                 // RESPONSES
                 // Route::prefix('responses')->name('.responses')->group(function () {
-                //     Route::get('', [UserResponseController::class, 'houseIndex']);
+                //     Route::get('', [UserResponseController::class, 'festivalIndex']);
                 //     Route::get('edit', [UserResponseController::class, 'edit'])->name('.edit');
                 //     Route::post('store', [UserResponseController::class, 'store'])->name('.store');
-                //     Route::get('{house_response}/delete', [UserResponseController::class, 'delete'])->name('.delete');
+                //     Route::get('{festival_response}/delete', [UserResponseController::class, 'delete'])->name('.delete');
 
                 //     // RESPONSE
-                //     Route::prefix('{house_response}')->group(function () {
+                //     Route::prefix('{festival_response}')->group(function () {
                 //         Route::get('show', [UserResponseController::class, 'responseShow'])->name('.show');
                 //         Route::get('accept', [UserResponseController::class, 'accept'])->name('.accept');
                 //         Route::get('decline', [UserResponseController::class, 'decline'])->name('.decline');
@@ -89,7 +89,7 @@ Route::middleware('auth')->group(function () {
         //     Route::post('store', [UserResponseController::class, 'store'])->name('.store');
 
         //     // RESPONSE
-        //     Route::prefix('{house_response}')->group(function () {
+        //     Route::prefix('{festival_response}')->group(function () {
         //         Route::get('show', [UserResponseController::class, 'show'])->name('.show');
         //         Route::get('edit', [UserResponseController::class, 'edit'])->name('.edit');
         //         Route::get('delete', [UserResponseController::class, 'delete'])->name('.delete');
@@ -139,7 +139,7 @@ Route::middleware('auth')->group(function () {
         //     Route::get('', [ResponseController::class, 'index']);
         //     Route::get('create', [ResponseController::class, 'create'])->name('.create');
         //     Route::post('store', [ResponseController::class, 'store'])->name('.store');
-        //     Route::prefix('{house_response}')->group(function () {
+        //     Route::prefix('{festival_response}')->group(function () {
         //         Route::get('edit', [ResponseController::class, 'edit'])->name('.edit');
         //         Route::post('update', [ResponseController::class, 'update'])->name('.update');
         //         Route::get('delete', [ResponseController::class, 'delete'])->name('.delete');

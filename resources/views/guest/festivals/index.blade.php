@@ -25,7 +25,7 @@
                                     href="{{ route('festivals.show', compact('festival')) }}">{{ $festival->name }}</a>
                             </h2>
                             <h2 class="text-md font-bold">{{ $festival->location }}</h2>
-                            <p class="text-gray-500">€{{ $festival->rent . '/maand' }}</p>
+                            <p class="text-gray-500"></p>
                             <p class="text-gray-500">{{ $festival->rooms . ' kamers' }}</p>
                             <x-primary-link
                                 href="{{ route('festivals.show', compact('festival')) }}">Bekijken</x-primary-link>

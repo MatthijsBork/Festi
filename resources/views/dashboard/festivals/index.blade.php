@@ -31,16 +31,13 @@
                     <tr class="border-b even:bg-gray-50">
                         <td class="px-4 py-3">
                             <a class="hover:underline"
-                                href="{{ route('dashboard.festivals.info', compact('festival')) }}">{{ $festival->address }}</a>
+                                href="{{ route('dashboard.festivals.info', compact('festival')) }}">{{ $festival->name }}</a>
                         </td>
                         <td class="px-4 py-3">
-                            <p>{{ $festival->city }}</p>
+                            <p>{{ $festival->location }}</p>
                         </td>
                         <td class="px-4 py-3">
-                            <p>€{{ $festival->rent }}</p>
-                        </td>
-                        <td class="px-4 py-3">
-                            <p>{{ $festival->rooms }}</p>
+                            <p>{{ $festival->date }}</p>
                         </td>
                         <td class="flex justify-end py-3 text-right">
                             <a title="Bewerken" href="{{ route('dashboard.festivals.info', compact('festival')) }}"

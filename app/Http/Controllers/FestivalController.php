@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Festival;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\FestivalStoreRequest;
+use App\Http\Requests\FestivalUpdateRequest;
 
 class FestivalController extends Controller
 {
@@ -34,5 +37,52 @@ class FestivalController extends Controller
         }
 
         return view('user.festivals.create');
+    }
+
+    public function store(FestivalStoreRequest $request)
+    {
+        $festival = new Festival();
+        $festival->name = $request->name;
+        $festival->email = $request->email;
+        $festival->location = $request->location;
+        $festival->date = $request->date;
+        $festival->description = $request->description;
+        $festival->user_id = Auth::user()->id;
+        // $festival->user_id = Auth::id(); -> Dit is net iets korter
+        $festival->save();
+
+        return redirect()->route('dashboard.festivals.info', compact('festival'))->with('success', 'Festival opgeslagen');
+    }
+
+    public function show(Festival $festival)
+    {
+        return view('guest.festivals.show', compact('festival'));
+    }
+
+    public function info(Festival $festival)
+    {
+        $this->authorize('hasFestival', [Festival::class, $festival]);
+
+        return view('dashboard.festivals.info', compact('festival'));
+    }
+
+    public function edit(Festival $festival)
+    {
+        $this->authorize('hasFestival', [Festival::class, $festival]);
+
+        return view('dashboard.festivals.edit', compact('festival'));
+    }
+
+    public function update(FestivalUpdateRequest $request, Festival $festival)
+    {
+        $festival->name = $request->name;
+        $festival->email = $request->email;
+        $festival->location = $request->location;
+        $festival->date = $request->date;
+        $festival->description = $request->description;
+        $festival->user_id = Auth::user()->id;
+        $festival->save();
+
+        return redirect()->route('dashboard.festivals.info', compact('festival'))->with('success', 'Huis opgeslagen');
     }
 }

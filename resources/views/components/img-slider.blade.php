@@ -32,8 +32,8 @@
         Alpine.data("imageSlider", () => ({
             currentIndex: 1,
             images: [
-                @foreach ($house->images as $image)
-                    "{{ asset('/images/houses/' . $house->id . '/' . $image->img) }}",
+                @foreach ($festival->images as $image)
+                    "{{ asset('/images/festivals/' . $festival->id . '/' . $image->img) }}",
                 @endforeach
             ],
             previous() {
