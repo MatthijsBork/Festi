@@ -25,6 +25,7 @@ class User extends Authenticatable
         'address',
         'postal_code',
         'city',
+        'role_id',
         'is_admin',
         'password',
     ];
@@ -54,9 +55,9 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public static function organizers()
+    public static function getByRoleName($role)
     {
-        $role = Role::where('name', 'organisator')->first();
+        $role = Role::where('name', $role)->first();
         $users = $role ? $role->users : collect();
         return $users;
     }

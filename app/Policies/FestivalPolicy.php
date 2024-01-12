@@ -17,11 +17,6 @@ class FestivalPolicy
 
     public function hasFestival(User $user, Festival $festival)
     {
-        return $festival->user->id == $user->id || $user->is_admin == 1;
-    }
-
-    public function isOrganizer(User $user)
-    {
-        return $user->role->name == 'organisator' || $user->is_admin == 1;
+        return ($festival->user->id ?? null) == $user->id || $user->is_admin == 1;
     }
 }

@@ -7,46 +7,39 @@
         <x-search :action="null"></x-search>
     </x-slot>
 
-    <x-slot name="titleSlot">Mijn woningen</x-slot>
+    <x-slot name="titleSlot">Mijn tickets</x-slot>
 
-    <x-slot name="buttonSlot">
-        <x-primary-link href="{{ route('user.houses.create') }}">Woning toevoegen</x-primary-link>
-    </x-slot>
-
-    @if (!isset($houses[0]))
+    @if (!isset($tickets[0]))
         <div class="w-full p-10 text-center bg-white rounded-lg">
             <h1 class="text-xl font-bold text-blue-500">Veel leegte...</h1>
-            <p class="mb-4">Er zijn geen woningen gevonden</p>
+            <p class="mb-4">Er zijn geen tickets gevonden</p>
+            <x-primary-link href="{{ route('festivals.index') }}">Festivals bekijken</x-primary-link>
         </div>
     @else
         <table class="w-full text-left bg-white table-auto sm:rounded-lg">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-4 py-3">Adres</th>
-                    <th class="px-4 py-3">Stad</th>
-                    <th class="px-4 py-3">Huurprijs</th>
+                    <th class="px-4 py-3">Festival</th>
+                    <th class="px-4 py-3">Locatie</th>
+                    <th class="px-4 py-3">Datum</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($houses as $house)
+                @foreach ($tickets as $ticket)
                     <tr class="border-b even:bg-gray-50">
                         <td class="px-4 py-3">
-                            <a class="hover:underline"
-                                href="{{ route('user.houses.info', compact('house')) }}">{{ $house->address }}</a>
+                            {{ $ticket->festival->name }}
                         </td>
                         <td class="px-4 py-3">
-                            <p>{{ $house->city }}</p>
+                            <p>{{ $ticket->festival->location }}</p>
                         </td>
                         <td class="px-4 py-3">
-                            <p>€{{ $house->rent }}</p>
+                            <p>€{{ $ticket->date }}</p>
+
                         </td>
                         <td class="flex justify-end py-3 text-right">
-                            <a title="Bewerken" href="{{ route('user.houses.info', compact('house')) }}"
-                                class="text-blue-700 hover:underline">
-                                <x-edit-icon></x-edit-icon>
-                            </a>
-                            <a title="Verwijderen" href="{{ route('user.houses.delete', compact('house')) }}"
+                            <a title="Verwijderen" href="{{ route('user.tickets.delete', compact('ticket')) }}"
                                 class="text-red-500 hover:underline"
                                 onclick="return confirm('Weet u zeker dat u dit wilt verwijderen?');">
                                 <x-trash-icon></x-trash-icon>
@@ -57,7 +50,7 @@
             </tbody>
         </table>
         <div class="my-4">
-            {{ $houses->links() }}
+            {{ $tickets->links() }}
         </div>
     @endif
 </x-layout>

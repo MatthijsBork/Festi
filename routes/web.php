@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FestivalController;
 use App\Http\Controllers\ResponseController;
@@ -29,8 +31,7 @@ Route::prefix('festivals')->name('festivals')->group(function () {
     Route::get('', [FestivalController::class, 'index'])->name('.index');
     Route::prefix('{festival}')->group(function () {
         Route::get('show', [FestivalController::class, 'show'])->name('.show');
-        Route::get('respond', [FestivalController::class, 'respond'])->name('.respond');
-        Route::post('respond', [FestivalController::class, 'postResponse'])->name('.respond.store');
+        Route::post('reserve', [TicketController::class, 'store'])->name('.reserve');
     });
 });
 
@@ -44,57 +45,52 @@ Route::middleware('auth')->group(function () {
     // USER
     Route::prefix('user')->name('user')->group(function () {
 
-        // USER/HOUSES
         Route::prefix('festivals')->name('.festivals')->group(function () {
-            Route::get('', [FestivalController::class, 'index']);
+            Route::get('', [FestivalController::class, 'own']);
             Route::get('create', [FestivalController::class, 'create'])->name('.create');
             Route::post('store', [FestivalController::class, 'store'])->name('.store');
 
-            // HOUSE
             Route::prefix('{festival}')->group(function () {
                 Route::get('edit', [FestivalController::class, 'edit'])->name('.edit');
                 Route::post('update', [FestivalController::class, 'update'])->name('.update');
                 Route::get('info', [FestivalController::class, 'info'])->name('.info');
                 Route::get('delete', [FestivalController::class, 'delete'])->name('.delete');
 
-                // HOUSE IMAGES
                 Route::prefix('images')->name('.images')->group(function () {
-                    Route::get('', [FestivalImageController::class, 'show']);
+                    Route::get('', [FestivalController::class, 'images']);
                     Route::get('edit', [FestivalImageController::class, 'edit'])->name('.edit');
                     Route::post('store', [FestivalImageController::class, 'store'])->name('.store');
                     Route::get('{image}/delete', [FestivalImageController::class, 'delete'])->name('.delete');
                 });
 
-                // RESPONSES
-                // Route::prefix('responses')->name('.responses')->group(function () {
-                //     Route::get('', [UserResponseController::class, 'festivalIndex']);
-                //     Route::get('edit', [UserResponseController::class, 'edit'])->name('.edit');
-                //     Route::post('store', [UserResponseController::class, 'store'])->name('.store');
-                //     Route::get('{festival_response}/delete', [UserResponseController::class, 'delete'])->name('.delete');
-
-                //     // RESPONSE
-                //     Route::prefix('{festival_response}')->group(function () {
-                //         Route::get('show', [UserResponseController::class, 'responseShow'])->name('.show');
-                //         Route::get('accept', [UserResponseController::class, 'accept'])->name('.accept');
-                //         Route::get('decline', [UserResponseController::class, 'decline'])->name('.decline');
-                //     });
-                // });
+                Route::prefix('bookings')->name('.bookings')->group(function () {
+                    Route::get('', [FestivalController::class, 'bookings']);
+                    Route::get('edit', [BookingController::class, 'edit'])->name('.edit');
+                    Route::post('store', [BookingController::class, 'store'])->name('.store');
+                    Route::post('update', [BookingController::class, 'update'])->name('.update');
+                    Route::get('delete', [BookingController::class, 'delete'])->name('.delete');
+                });
             });
         });
 
-        // USER/RESPONSES
-        // Route::prefix('responses')->name('.responses')->group(function () {
-        //     Route::get('', [UserResponseController::class, 'index']);
-        //     Route::get('create', [UserResponseController::class, 'create'])->name('.create');
-        //     Route::post('store', [UserResponseController::class, 'store'])->name('.store');
+        Route::prefix('bookings')->name('.bookings')->group(function () {
+            Route::get('', [BookingController::class, 'own']);
+            Route::post('store', [BookingController::class, 'store'])->name('.store');
 
-        //     // RESPONSE
-        //     Route::prefix('{festival_response}')->group(function () {
-        //         Route::get('show', [UserResponseController::class, 'show'])->name('.show');
-        //         Route::get('edit', [UserResponseController::class, 'edit'])->name('.edit');
-        //         Route::get('delete', [UserResponseController::class, 'delete'])->name('.delete');
-        //     });
-        // });
+            Route::prefix('{booking}')->group(function () {
+                Route::get('accept', [BookingController::class, 'accept'])->name('.accept');
+                Route::get('reject', [BookingController::class, 'reject'])->name('.reject');
+                Route::get('delete', [BookingController::class, 'delete'])->name('.delete');
+            });
+        });
+
+        // USER/TICKETS
+        Route::prefix('tickets')->name('.tickets')->group(function () {
+            Route::get('', [TicketController::class, 'own']);
+            Route::get('edit', [TicketController::class, 'edit'])->name('.edit');
+            Route::post('store', [TicketController::class, 'store'])->name('.store');
+            Route::get('delete', [TicketController::class, 'delete'])->name('.delete');
+        });
     });
 
     // ADMIN
@@ -115,10 +111,17 @@ Route::middleware('auth')->group(function () {
                 Route::get('delete', [FestivalController::class, 'delete'])->name('.delete');
 
                 Route::prefix('images')->name('.images')->group(function () {
-                    Route::get('', [FestivalImageController::class, 'show']);
+                    Route::get('', [FestivalController::class, 'images']);
                     Route::get('edit', [FestivalImageController::class, 'edit'])->name('.edit');
                     Route::post('store', [FestivalImageController::class, 'store'])->name('.store');
                     Route::get('{image}/delete', [FestivalImageController::class, 'delete'])->name('.delete');
+                });
+
+                Route::prefix('bookings')->name('.bookings')->group(function () {
+                    Route::get('', [FestivalController::class, 'bookings']);
+                    Route::get('edit', [BookingController::class, 'edit'])->name('.edit');
+                    Route::post('store', [BookingController::class, 'store'])->name('.store');
+                    Route::get('{booking}/delete', [BookingController::class, 'delete'])->name('.delete');
                 });
             });
         });

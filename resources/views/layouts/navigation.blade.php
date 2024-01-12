@@ -44,13 +44,19 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            {{-- <x-dropdown-link :href="route('user.festivals')">
-                                Mijn festivals
-                            </x-dropdown-link> --}}
-                            {{-- <x-dropdown-link :href="route('user.responses')">
-                                Mijn reacties
-                            </x-dropdown-link> --}}
-
+                            @if (@Auth::user()->role->name == 'Organisator')
+                                <x-dropdown-link :href="route('user.festivals')">
+                                    Mijn festivals
+                                </x-dropdown-link>
+                            @endif
+                            @if (@Auth::user()->role->name == 'Artiest')
+                                <x-dropdown-link :href="route('user.bookings')">
+                                    Mijn boekingen
+                                </x-dropdown-link>
+                            @endif
+                            <x-dropdown-link :href="route('user.tickets')">
+                                Mijn tickets
+                            </x-dropdown-link>
                             <!-- Authentication -->
                             <x-dropdown-link href="#"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -111,14 +117,19 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                {{-- <x-responsive-nav-link :href="route('user.festivals')">
-                    Mijn woningen
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('user.responses')">
-                    Mijn reacties
-                </x-responsive-nav-link> --}}
-
-                <!-- Authentication -->
+                @if (@Auth::user()->role->name == 'Organisator')
+                    <x-dropdown-link :href="route('user.festivals')">
+                        Mijn festivals
+                    </x-dropdown-link>
+                @endif
+                @if (@Auth::user()->role->name == 'Artiest')
+                    <x-dropdown-link :href="route('user.bookings')">
+                        Mijn boekingen
+                    </x-dropdown-link>
+                @endif
+                <x-dropdown-link :href="route('user.tickets')">
+                    Mijn tickets
+                </x-dropdown-link>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 

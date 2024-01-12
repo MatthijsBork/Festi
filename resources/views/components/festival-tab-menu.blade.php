@@ -16,8 +16,8 @@
         <x-nav-link class="pb-3" :href="route('user.festivals.images', compact('festival'))" :active="request()->routeIs('user.festivals.images*')">
             Foto's
         </x-nav-link>
-        <x-nav-link class="pb-3" :href="route('user.festivals.responses', compact('festival'))" :active="request()->routeIs('user.festivals.responses*')">
-            Reacties
+        <x-nav-link class="pb-3" :href="route('user.festivals.bookings', compact('festival'))" :active="request()->routeIs('user.festivals.bookings*')">
+            Boekingen
         </x-nav-link>
         <hr>
     </div>

@@ -20,6 +20,17 @@ class FestivalController extends Controller
         return view('guest.festivals.index', compact('festivals'));
     }
 
+    public function own(Request $request)
+    {
+        $this->authorize('isOrganizer', [User::class, Auth::user()]);
+
+        $query = $request->input('query');
+        $festivals = Festival::where('user_id', 'like', Auth::user()->id)
+            ->where('name', 'like', "%$query%")
+            ->orderBy('name')->paginate(10);
+        return view('user.festivals.index', compact('festivals'));
+    }
+
     public function dashboard(Request $request)
     {
         $query = $request->input('query');
@@ -32,7 +43,7 @@ class FestivalController extends Controller
     public function create(Request $request)
     {
         if ($request->routeIs('dashboard.festivals.create')) {
-            $organizers = User::organizers();
+            $organizers = User::getByRoleName('Organisator');
             return view('dashboard.festivals.create', compact('organizers'));
         }
 
@@ -51,7 +62,12 @@ class FestivalController extends Controller
         // $festival->user_id = Auth::id(); -> Dit is net iets korter
         $festival->save();
 
-        return redirect()->route('dashboard.festivals.info', compact('festival'))->with('success', 'Festival opgeslagen');
+        if ($request->routeIs('dashboard.festivals.create')) {
+            $organizers = User::getByRoleName('Organisator');
+            return redirect()->route('dashboard.festivals.info', compact('festival'))->with('success', 'Festival opgeslagen');
+        }
+
+        return redirect()->route('user.festivals.info', compact('festival'))->with('success', 'Festival opgeslagen');
     }
 
     public function show(Festival $festival)
@@ -59,11 +75,41 @@ class FestivalController extends Controller
         return view('guest.festivals.show', compact('festival'));
     }
 
-    public function info(Festival $festival)
+    public function info(Request $request, Festival $festival)
     {
         $this->authorize('hasFestival', [Festival::class, $festival]);
 
-        return view('dashboard.festivals.info', compact('festival'));
+        if ($request->routeIs('dashboard.festivals*')) {
+            return view('dashboard.festivals.info', compact('festival'));
+        }
+
+        return view('user.festivals.info', compact('festival'));
+    }
+
+    public function images(Request $request, Festival $festival)
+    {
+        $this->authorize('hasFestival', [Festival::class, $festival]);
+
+        $festival_images = $festival->images()->get();
+
+        if ($request->routeIs('dashboard.festivals*')) {
+            $organizers = User::getByRoleName('Organisator');
+            return view('dashboard.festivals.images', compact('festival', 'festival_images'));
+        }
+
+        return view('user.festivals.images', compact('festival'));
+    }
+
+    public function bookings(Festival $festival)
+    {
+        $this->authorize('hasFestival', [Festival::class, $festival]);
+
+        $bookings = $festival->bookings()->paginate(10);
+
+        $bookedArtists = $festival->bookings()->pluck('user_id')->toArray();
+        $artists =  User::getByRoleName('Artiest')->whereNotIn('id', $bookedArtists);
+
+        return view('user.festivals.bookings', compact('festival', 'bookings', 'artists'));
     }
 
     public function edit(Festival $festival)

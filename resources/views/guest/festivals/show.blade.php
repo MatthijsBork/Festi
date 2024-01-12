@@ -31,9 +31,20 @@
                                 {{ $festival->location }}
                             </h2>
                             <hr class="my-3">
-                            <h2 class="text-xl font-semibold"><x-primary-link>Ik ben er ook bij!</x-primary-link></h2>
+                            <div x-cloak x-data="{ openEditRoleModal: {{ $errors->any() ? 'true' : 'false' }} }">
+                                <x-primary-link @click="openEditRoleModal = ! openEditRoleModal" type="button"
+                                    href="#">Plek reserveren</x-primary-link>
+                                <x-reserve-modal :action="route('festivals.reserve', compact('festival'))"></x-reserve-modal>
+                            </div>
                             <hr class="my-3">
-                            <p>{{ $festival->rooms }} kamers</p>
+                            <p>Artiesten</p>
+                            @if ($festival->acceptedBookings()->first() == null)
+                                <p>Er zijn nog geen artiesten geboekt</p>
+                            @else
+                                @foreach ($festival->acceptedBookings() as $booking)
+                                    {{ $booking->user->name }},
+                                @endforeach
+                            @endif
                             <hr class="my-3">
                             <p class="pt-5 text-xl">
                                 <x-input-label>Beschrijving</x-input-label>

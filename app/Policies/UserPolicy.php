@@ -16,6 +16,11 @@ class UserPolicy
 
     public function isOrganizer(User $user)
     {
-        return $user->role->name == 'organisator' || $user->is_admin == 1;
+        return $user->role->name == 'Organisator' || $user->is_admin == 1;
+    }
+
+    public function isArtist(User $user)
+    {
+        return $user->role->name == 'Artist' || $user->is_admin == 1;
     }
 }

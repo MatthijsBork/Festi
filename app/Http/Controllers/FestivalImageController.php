@@ -10,12 +10,6 @@ use App\Http\Requests\FestivalImageStoreRequest;
 
 class FestivalImageController extends Controller
 {
-    public function show(Festival $festival)
-    {
-        $festival_images = $festival->images()->get();
-        return view('dashboard.festivals.images', compact('festival', 'festival_images'));
-    }
-
     public function edit(Festival $festival)
     {
         $festival_images = $festival->images()->get();

@@ -1,20 +1,20 @@
 <x-show-layout>
 
     <x-slot name="titleSlot">
-        <a class="text-blue-500 hover:underline" href="{{ route('user.houses.responses', compact('house')) }}">
+        <a class="text-blue-500 hover:underline" href="{{ route('user.festivals.responses', compact('festival')) }}">
             < Terug</a>
     </x-slot>
 
     <div class="p-2">
         <div class="flex md:flex-row justify-between w-full flex-col-reverse">
             <h1 class="text-xl font-semibold">Reactie op
-                {{ $house_response->house->address . ', ' . $house_response->house->city }}</h1>
+                {{ $festival_response->festival->address . ', ' . $festival_response->festival->city }}</h1>
             <div>
-                @if ($house->acceptedResponse() == null)
+                @if ($festival->acceptedResponse() == null)
                     <x-primary-link class="bg-green-600 hover:bg-green-700"
-                        href="{{ route('user.houses.responses.accept', compact('house', 'house_response')) }}">Reactie
+                        href="{{ route('user.festivals.responses.accept', compact('festival', 'festival_response')) }}">Reactie
                         accepteren</x-primary-link>
-                @elseif ($house->acceptedResponse()->id ?? null == $house_response->id)
+                @elseif ($festival->acceptedResponse()->id ?? null == $festival_response->id)
                     <x-primary-link class="bg-green-100 hover:bg-green-100 border border-green-500 text-green-500">Al
                         geaccepteerd</x-primary-link>
                 @else
@@ -22,7 +22,7 @@
                         bezet</x-primary-link>
                 @endif
                 <x-primary-link class="bg-red-500 hover:bg-red-700 hover:text-white"
-                    href="{{ route('user.houses.responses.decline', compact('house', 'house_response')) }}"
+                    href="{{ route('user.festivals.responses.decline', compact('festival', 'festival_response')) }}"
                     onclick="return confirm('Hiermee wordt de reactie verwijderd. Doorgaan?');">Reactie
                     afwijzen</x-primary-link>
             </div>
@@ -38,10 +38,10 @@
                 <p><b>Reactie:</b></p>
             </div>
             <div class="flex flex-col">
-                <p>{{ $house_response->name }}</p>
-                <p>{{ $house_response->email }}</p>
-                <p>{{ $house_response->telephone }}</p>
-                <p>{{ $house_response->message }}</p>
+                <p>{{ $festival_response->name }}</p>
+                <p>{{ $festival_response->email }}</p>
+                <p>{{ $festival_response->telephone }}</p>
+                <p>{{ $festival_response->message }}</p>
             </div>
         </div>
 

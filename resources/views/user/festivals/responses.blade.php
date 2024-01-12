@@ -3,9 +3,9 @@
         <x-user-menu></x-user-menu>
     </x-slot>
 
-    <x-slot name="titleSlot">{{ $house->address . ', ' . $house->city }}</x-slot>
+    <x-slot name="titleSlot">{{ $festival->address . ', ' . $festival->city }}</x-slot>
 
-    <x-house-tab-menu :house="$house"></x-house-tab-menu>
+    <x-festival-tab-menu :festival="$festival"></x-festival-tab-menu>
     @if (!isset($responses[0]))
         <div class="w-full p-10 text-center bg-white rounded-lg">
             <h1 class="text-xl font-bold text-blue-500">Veel leegte...</h1>
@@ -23,24 +23,24 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($house->responses as $house_response)
+                @foreach ($festival->responses as $festival_response)
                     <tr class="border-b even:bg-gray-50">
                         <td class="px-4 py-3">
                             <a class="hover:underline"
-                                href="{{ route('user.houses.responses.show', compact('house', 'house_response')) }}">{{ $house_response->name }}</a>
+                                href="{{ route('user.festivals.responses.show', compact('festival', 'festival_response')) }}">{{ $festival_response->name }}</a>
                         </td>
                         <td class="px-4 py-3">
-                            <a>{{ $house_response->email }}</a>
+                            <a>{{ $festival_response->email }}</a>
                         </td>
                         <td class="px-4 py-3">
-                            <a>{{ $house_response->telephone }}</a>
+                            <a>{{ $festival_response->telephone }}</a>
                         </td>
                         <td class="px-4 py-3">
-                            <a>{{ $house_response->status == 1 ? 'Geaccepteerd' : 'Open' }}</a>
+                            <a>{{ $festival_response->status == 1 ? 'Geaccepteerd' : 'Open' }}</a>
                         </td>
                         <td class="flex justify-end py-3 text-right">
                             <a title="Informatie"
-                                href="{{ route('user.houses.responses.show', compact('house', 'house_response')) }}"
+                                href="{{ route('user.festivals.responses.show', compact('festival', 'festival_response')) }}"
                                 class="text-blue-700 hover:underline">
                                 <x-eye-icon></x-eye-icon>
                             </a>
