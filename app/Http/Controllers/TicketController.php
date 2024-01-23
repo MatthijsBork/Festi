@@ -14,8 +14,6 @@ class TicketController extends Controller
 {
     public function own(Request $request)
     {
-        $this->authorize('isArtist', [User::class, Auth::user()]);
-
         $query = $request->input('query');
         $tickets = Ticket::where('user_id', 'like', Auth::user()->id)
             ->orderBy('created_at')->paginate(10);

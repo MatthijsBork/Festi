@@ -10,10 +10,15 @@ use App\Http\Requests\FestivalImageStoreRequest;
 
 class FestivalImageController extends Controller
 {
-    public function edit(Festival $festival)
+    public function edit(Request $request, Festival $festival)
     {
         $festival_images = $festival->images()->get();
-        return view('dashboard.festivals.editImages', compact('festival', 'festival_images'));
+
+        if ($request->routeIs('dashboard.festivals*')) {
+            return redirect()->route('dashboard.festivals.editImages', compact('festival', 'festival_images'));
+        }
+
+        return view('user.festivals.editImages', compact('festival', 'festival_images'));
     }
 
     public function store(FestivalImageStoreRequest $request, Festival $festival)

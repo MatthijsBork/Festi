@@ -19,7 +19,7 @@ use App\Http\Requests\UserUpdateRequest;
 
 class UserController extends Controller
 {
-    public function create()
+    public function create() 
     {
         $roles = Role::orderBy('name')->get();
         return view('dashboard.users.create', compact('roles'));

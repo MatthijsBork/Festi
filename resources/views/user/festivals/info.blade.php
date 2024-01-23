@@ -10,7 +10,7 @@
     </x-slot>
 
     <x-slot name="buttonSlot">
-        <x-primary-link href="{{ route('dashboard.festivals.edit', compact('festival')) }}">Informatie
+        <x-primary-link href="{{ route('user.festivals.edit', compact('festival')) }}">Informatie
             bewerken</x-primary-link>
     </x-slot>
 

@@ -35,7 +35,7 @@
                             <p>{{ $ticket->festival->location }}</p>
                         </td>
                         <td class="px-4 py-3">
-                            <p>€{{ $ticket->date }}</p>
+                            <p>{{ $ticket->festival->date }}</p>
 
                         </td>
                         <td class="flex justify-end py-3 text-right">

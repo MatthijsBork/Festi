@@ -29,6 +29,7 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th class="px-4 py-3">Artiest</th>
+                    <th class="px-4 py-3">Status</th>
                     <th></th>
                 </tr>
             </thead>
@@ -38,10 +39,20 @@
                         <td class="px-4 py-3">
                             <p>{{ $booking->user->name }}</p>
                         </td>
+                        <td class="px-4 py-3">
+                            @if ($booking->status == 2)
+                                <p class="text-red-500">Geweigerd</p>
+                            @elseif($booking->status == 1)
+                                <p class="text-green-500">Geaccepteerd</p>
+                            @else
+                                <p>Open</p>
+                            @endif
+                        </td>
                         <td class="flex justify-end py-3 text-right">
                             <div class="flex justify-end" x-cloak x-data="{ openEditRoleModal: false }">
                                 <a title="Bewerken" @click="openEditRoleModal = ! openEditRoleModal" type="button"
-                                    href="{{ route('user.festivals.bookings') }}" class="text-blue-700 hover:underline">
+                                    href="{{ route('user.festivals.bookings', compact('festival')) }}"
+                                    class="text-blue-700 hover:underline">
                                     <x-edit-icon></x-edit-icon>
                                 </a>
                                 <x-booking-edit-modal :booking="$booking" :action="route('user.festivals.bookings.update', compact('festival', 'booking'))"

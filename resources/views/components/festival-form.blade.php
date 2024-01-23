@@ -13,7 +13,7 @@
         </div>
         <div class="mb-4">
             <x-input-label for="email">Klanten E-mail</x-input-label>
-            <input type="text" id="email" name="email" value="{{ $festival->name ?? old('email') }}"
+            <input type="text" id="email" name="email" value="{{ $festival->email ?? old('email') }}"
                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
             @error('email')
                 <div class="text-red-500">{{ $message }}</div>
@@ -21,8 +21,7 @@
         </div>
         <div class="mb-4">
             <x-input-label for="location">Locatie</x-input-label>
-            <input type="text" id="location" name="location"
-                value="{{ $festival->location ?? old('location') }}"
+            <input type="text" id="location" name="location" value="{{ $festival->location ?? old('location') }}"
                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
             @error('location')
                 <div class="text-red-500">{{ $message }}</div>

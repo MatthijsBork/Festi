@@ -97,7 +97,7 @@ class FestivalController extends Controller
             return view('dashboard.festivals.images', compact('festival', 'festival_images'));
         }
 
-        return view('user.festivals.images', compact('festival'));
+        return view('user.festivals.images', compact('festival', 'festival_images'));
     }
 
     public function bookings(Festival $festival)
@@ -112,11 +112,16 @@ class FestivalController extends Controller
         return view('user.festivals.bookings', compact('festival', 'bookings', 'artists'));
     }
 
-    public function edit(Festival $festival)
+    public function edit(Request $request, Festival $festival)
     {
         $this->authorize('hasFestival', [Festival::class, $festival]);
 
-        return view('dashboard.festivals.edit', compact('festival'));
+        if ($request->routeIs('dashboard.festivals*')) {
+            $organizers = User::getByRoleName('Organisator');
+            return view('dashboard.festivals.edit', compact('festival'));
+        }
+
+        return view('user.festivals.edit', compact('festival'));
     }
 
     public function update(FestivalUpdateRequest $request, Festival $festival)
@@ -129,6 +134,10 @@ class FestivalController extends Controller
         $festival->user_id = Auth::user()->id;
         $festival->save();
 
-        return redirect()->route('dashboard.festivals.info', compact('festival'))->with('success', 'Huis opgeslagen');
+        if ($request->routeIs('dashboard.festivals*')) {
+            return redirect()->route('dashboard.festivals.info', compact('festival'))->with('success', 'Festival opgeslagen');
+        }
+
+        return redirect()->route('user.festivals.info', compact('festival'))->with('success', 'Festival opgeslagen');
     }
 }

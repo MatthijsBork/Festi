@@ -16,7 +16,15 @@ class BookingStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'artist' => 'required|exists:artists,id'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'artist.required' => 'Kies een artiest',
+            'artist.exists' => 'Artiest bestaat niet'
         ];
     }
 }

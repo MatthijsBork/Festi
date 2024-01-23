@@ -8,7 +8,7 @@
                 <div>
                     <div>
                         <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">
-                            {{ $title ?? 'Rol' }}</h3>
+                            Inschrijven</h3>
                         <div class="mt-2">
                             <form method="post" action="{{ $action }}">
                                 @csrf
